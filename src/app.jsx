@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import CustomersPage from './pages/EventsPage';
+import EventsPage from './pages/EventsPage';
 import PromotePage from './pages/PromotePage';
-import ProductPage from './pages/ProductPage';
-import DashboardPage from './pages/DashboardPage';
 import IncomePage from './pages/IncomePage';
 import HelpPage from './pages/HelpPage';
 import { Layout } from './componens/layout/Layout';
@@ -13,9 +11,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<DashboardPage />} />
-          <Route path="product" element={<ProductPage />} />
-          <Route path="customers" element={<CustomersPage />} />
+          <Route index element={<EventsPage />} />
           <Route path="income" element={<IncomePage />} />
           <Route path="promote" element={<PromotePage />} />
           <Route path="help" element={<HelpPage />} />

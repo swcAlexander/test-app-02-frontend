@@ -8,7 +8,10 @@ function Events() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [pageNumber, setPageNumber] = useState(0);
-  const usersPerPage = 8;
+  const [showSubscribers, setShowSubscribers] = useState(false);
+
+  const [visibleSubscribers, setVisibleSubscribers] = useState({});
+  const usersPerPage = 6;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,6 +26,13 @@ function Events() {
     };
     fetchData();
   }, []);
+
+const toggleSubscribers = (index) => {
+  setVisibleSubscribers((prevVisibleSubscribers) => ({
+    ...prevVisibleSubscribers,
+    [index]: !prevVisibleSubscribers[index],
+  }));
+};
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -41,18 +51,27 @@ function Events() {
   const displayData = data
     .slice(pagesVisited, pagesVisited + usersPerPage)
     .map((event, index) => (
-      <li key={index}>
-        <h2>{event.title}</h2>
-        <p>{event.description}</p>
-        <p>{formatDate(event.eventDate)}</p>
-        <p>{event.organizer}</p>
+      <li key={index} className='evens-section_item'>
+        <h2 className='evens-section_title'>{event.title}</h2>
+        <p className='evens-section_par'>{event.description}</p>
+        <p className='evens-section_par'>{formatDate(event.eventDate)}</p>
+        <p className='evens-section_par'>{event.organizer}</p>
 
-        {event.subscribers.map((subscriber) => (
-          <div>
-            <p>{subscriber.name}</p>
-            <p>{subscriber.email}</p>
+        {event.subscribers.length > 0 && (
+  <div>
+    <button onClick={() => toggleSubscribers(index)}>Toggle Subscribers</button>
+    {visibleSubscribers[index]  && (
+      <div className='subsctibers-section'>
+        {event.subscribers.map((subscriber, index) => (
+          <div key={index}>
+            <p className='subsctibers-section_par'>{subscriber.name}</p>
+            <p className='subsctibers-section_par'>{subscriber.email}</p>
           </div>
         ))}
+      </div>
+    )}
+  </div>
+)}
 
         <button>Register</button>
       </li>
@@ -63,18 +82,11 @@ function Events() {
   };
 
   return (
-    <div className="customers-section">
-      <div className="costumer-section__header">
-        <div className="customers-section__container">
-          <h2 className="customers-section__title">All Customers</h2>
-          <span className="customers-section__span">Active Members</span>
-        </div>
+    <div className="events-section">
+      <div className='evens-section_list'>
+        {displayData}
       </div>
-      {displayData}
       <div className="pagination-container">
-        <p className="customers-section__paragraph">
-          Showing data 1 to 8 of 256K entries
-        </p>
         <ReactPaginate
           previousLabel={'<'}
           nextLabel={'>'}
