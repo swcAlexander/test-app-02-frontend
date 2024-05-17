@@ -58,22 +58,30 @@ const toggleSubscribers = (index) => {
         <p className='evens-section_par'>{event.organizer}</p>
 
         {event.subscribers.length > 0 && (
-  <div>
-    <button onClick={() => toggleSubscribers(index)}>Toggle Subscribers</button>
-    {visibleSubscribers[index]  && (
-      <div className='subsctibers-section'>
-        {event.subscribers.map((subscriber, index) => (
-          <div key={index}>
-            <p className='subsctibers-section_par'>{subscriber.name}</p>
-            <p className='subsctibers-section_par'>{subscriber.email}</p>
-          </div>
-        ))}
-      </div>
-    )}
-  </div>
-)}
+          <div className='button-block'>
+            <button type='button' className='onClick-button'>Register</button>
+            <button className='onClick-button' onClick={() => toggleSubscribers(index)}>Toggle Subscribers</button>
+            {visibleSubscribers[index]  && (
+              <div className='backdrop'>
+                <div className='modal'>
+                <button type="button" class="button-close" onClick={() => toggleSubscribers(index)}>
+                  <svg class="button-close__image" width="18" height="18">
+                    <use href="./src/assets/images/icons.svg#icon-close-black"></use>
+                  </svg>
+                </button>
+                {event.subscribers.map((subscriber, index) => (
+                  <div key={index}>
+                    <p className='subsctibers-section_par'>{subscriber.name}</p>
+                    <p className='subsctibers-section_par'>{subscriber.email}</p>
 
-        <button>Register</button>
+                  </div>
+                  
+                ))}
+              </div>
+              </div>
+                    )}
+              
+          </div>)}
       </li>
     ));
 
